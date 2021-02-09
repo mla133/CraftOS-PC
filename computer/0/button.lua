@@ -6,13 +6,20 @@ mon.setBackgroundColor(colors.black)
 
 function clearTable()
    button = {}
-   mon.clear()
 end
-               
-function setTable(name, func, xmin, xmax, ymin, ymax)
+
+function setButton(name, buttonOn)
+   print(name)
+   print(button[name]["active"])
+   button[name]["active"] = buttonOn
+   screen()
+end
+                                             
+function setTable(name, func, param, xmin, xmax, ymin, ymax)
    button[name] = {}
    button[name]["func"] = func
    button[name]["active"] = false
+   button[name]["param"] = param
    button[name]["xmin"] = xmin
    button[name]["ymin"] = ymin
    button[name]["xmax"] = xmax
@@ -76,7 +83,11 @@ function checkxy(x, y)
    for name, data in pairs(button) do
       if y>=data["ymin"] and  y <= data["ymax"] then
          if x>=data["xmin"] and x<= data["xmax"] then
-            data["func"]()
+            if data["param"] == "" then
+              data["func"]()
+            else
+              data["func"](data["param"])
+            end
             return true
             --data["active"] = not data["active"]
             --print(name)
