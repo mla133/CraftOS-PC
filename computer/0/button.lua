@@ -1,7 +1,7 @@
-local mon = peripheral.wrap("top")
+mon = peripheral.wrap("top")
 mon.setTextScale(1)
 mon.setTextColor(colors.white)
-local button={}
+button={}
 mon.setBackgroundColor(colors.black)
 
 function clearTable()
@@ -36,8 +36,8 @@ end
 
 function fill(text, color, bData)
    mon.setBackgroundColor(color)
-   local yspot = math.floor((bData["ymin"] + bData["ymax"]) /2)
-   local xspot = math.floor((bData["xmax"] - bData["xmin"] - string.len(text)) /2) +1
+   yspot = math.floor((bData["ymin"] + bData["ymax"]) /2)
+   xspot = math.floor((bData["xmax"] - bData["xmin"] - string.len(text)) /2) +1
    for j = bData["ymin"], bData["ymax"] do
       mon.setCursorPos(bData["xmin"], j)
       if j == yspot then
@@ -60,7 +60,7 @@ end
 function screen()
    local currColor
    for name,data in pairs(button) do
-      local on = data["active"]
+      on = data["active"]
       if on == true then currColor = colors.lime else currColor = colors.red end
       fill(name, currColor, data)
    end
