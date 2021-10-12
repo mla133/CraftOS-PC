@@ -41,7 +41,7 @@
     "serverMode" : false,
     "showFPS" : false,
     "showMountPrompt" : true,
-    "skipUpdate" : "",
+    "skipUpdate" : "v2.5.2",
     "snapToSize" : true,
     "standardsMode" : false,
     "useHardwareRenderer" : false,

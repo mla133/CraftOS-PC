@@ -1,0 +1,78 @@
+--
+-- Getting started with PlowmanPlow's CC programs:
+--
+-- Copy and paste the line below in a CC computer command line:
+--
+-- pastebin run CrS25w1J
+--
+
+local scripts = {}
+
+scripts[1] = {id = "ejGGiwuT", name = "Base Status Monitor and Autocraft", file = "status.lua", startup = true}
+scripts[2] = {id = "cFSeSq42", name = "ME Network Status", file = "mestatus.lua", startup = true}
+scripts[3] = {id = "HW53E7TB", name = "BigReactor Monitor and Aux Control", file = "bigreactor.lua", startup = true}
+scripts[4] = {id = "GsrRcMZ5", name = "BigReactor Monitor", file = "bigreactor.lua", startup = true}
+scripts[5] = {id = "rKyaFNyZ", name = "Induction Matrix Monitor", file = "indmatrix.lua", startup = true}
+scripts[6] = {id = "zM6d7AAg", name = "Thermal Expansion Tank Monitor", file = "tetank.lua", startup = true}
+scripts[7] = {id = "RvbSNFBZ", name = "Draconic Reactor RF Storage", file = "draconicrf.lua", startup = true}
+scripts[8] = {id = "Lnuj6KAq", name = "Peripheral Method Enumeration", file = "methods.lua", startup = false}
+scripts[9] = {id = "jW8ka31Q", name = "Peripheral Method Documentation", file = "docs.lua", startup = false}
+scripts[10] = {id = "HWZsusLq", name = "Security System", file = "secsystem.lua", startup = true}
+
+if not http then
+   printError("PlowmanPlow Bootstrapper requires HTTP API")
+   return
+end
+
+local function get(script)
+   print("")
+   print("Downloading: " .. script.name)
+   local response = http.get("http://pastebin.com/raw.php?i=" .. textutils.urlEncode(script.id))
+   if response then
+      local contents = response.readAll()
+      response.close()
+      local file = fs.open(script.file, "w")
+      file.write(contents)
+      file.close()
+      print("Saved script: " .. script.file)
+      if ( script.startup == true ) then
+         local startup = 'shell.run("' .. script.file .. '")'
+         local file = fs.open("startup", "w")
+         file.write(startup)
+         file.close()
+         print("Created startup script")
+         print("Run 'startup' or reboot this computer")
+      end
+      print("")
+   else
+      printError("Pastebin retrieval failed.")
+   end
+end
+
+print("")
+print("PlowmanPlow's CC Program Bootstrapper")
+print("")
+print("Select a program from the list below")
+print("Press 'q' to exit/cancel")
+print("")
+for index, script in pairs(scripts) do
+   print(index .. ". " .. script.name)
+end
+
+while true do
+   local event, p1, p2, p3, p4 = os.pullEvent()
+   if event == "key" then
+      if p1 == keys.q then
+         print("")
+         return
+      else
+         local sId = tonumber(p1) - 1
+         if sId <= #scripts then
+            get(scripts[sId])
+            return
+         else
+            print("Please select a number from the list above")
+         end
+      end
+   end
+end

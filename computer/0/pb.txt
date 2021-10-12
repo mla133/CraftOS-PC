@@ -4,3 +4,7 @@ HAJU2g25 alongtimeago.lua
 4Jc41P8H monitor_methods.lua
 1LMhT2Zw monitor_touch_test.lua
 HRbMF1Eg buttonAPI
+xjp9sskb print
+4VNGqJAh turtle_gps
+x61Zcfi9 log.lua
+
